@@ -1,5 +1,11 @@
 public abstract class ChessMan {
-    private boolean isWhite;
+    final private boolean isWhite;
     private Cell currentCell;
+
+    public ChessMan(boolean isWhite, Cell currentCell) {
+        this.isWhite = isWhite;
+        this.currentCell = currentCell;
+    }
+
     public abstract boolean step(Cell toCell);
 }
