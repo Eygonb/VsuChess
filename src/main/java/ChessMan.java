@@ -1,11 +1,15 @@
-public abstract class ChessMan {
+public class ChessMan {
     final private boolean isWhite;
-    private Cell currentCell;
+    private String currentCell;
+    private ChessManType type;
 
-    public ChessMan(boolean isWhite, Cell currentCell) {
+    public ChessMan(boolean isWhite, String currentCell, ChessManType type) {
         this.isWhite = isWhite;
         this.currentCell = currentCell;
+        this.type = type;
     }
 
-    public abstract boolean step(Cell toCell);
+    public boolean step(Cell toCell) {
+        return false;
+    }
 }
