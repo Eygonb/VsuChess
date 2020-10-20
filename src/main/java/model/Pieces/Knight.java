@@ -5,6 +5,7 @@ import model.ChessPiece;
 import model.Color;
 import model.StepType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Knight implements ChessPiece {
@@ -44,4 +45,36 @@ public class Knight implements ChessPiece {
         }
         return StepType.CANCEL;
     }
+
+    //@Override
+    //public List<Cell> getPossibleMoves(List<List<Cell>> cellList, Cell from) {
+    //    List<Cell> possibleMoves = new ArrayList<>();
+    //    int row = from.getRow(), column = from.getColumn();
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 2).get(column + 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 2).get(column + 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 2).get(column - 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 2).get(column - 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 2).get(column + 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 2).get(column + 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 2).get(column - 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 2).get(column - 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 1).get(column + 2)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 1).get(column + 2));
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 1).get(column - 2)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 1).get(column - 2));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 1).get(column + 2)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 1).get(column + 2));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 1).get(column - 2)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 1).get(column - 2));
+//
+    //    return possibleMoves;
+    //}
 }

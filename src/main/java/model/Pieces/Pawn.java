@@ -41,16 +41,51 @@ public class Pawn implements ChessPiece {
         int colorMove = color == Color.WHITE ? 1 : -1;
 
         if (!wasMoving && rowStep == colorMove * 2 && columnStep == 0) {
-            if (cellList.get(from.getRow() + colorMove).get(from.getColumn()).getChess() == null && to.getChess() == null) {
+            boolean checkBlock = cellList.get(from.getRow() + colorMove).get(from.getColumn()).getChess() == null &&
+                    to.getChess() == null;
+            if (checkBlock) {
                 return StepType.STEP;
             }
         } else if (rowStep == colorMove) {
+            boolean checkEat = to.getChess() != null && Math.abs(columnStep) == 1 && to.getChess().getColor() != color;
             if (columnStep == 0 && to.getChess() == null) {
                 return StepType.STEP;
-            } else if (to.getChess() != null && Math.abs(columnStep) == 1 && to.getChess().getColor() != color) {
+            } else if (checkEat) {
                 return StepType.STEP;
             }
         }
         return StepType.CANCEL;
     }
+
+    //@Override
+    //public List<Cell> getPossibleMoves(List<List<Cell>> cellList, Cell from) {
+    //    List<Cell> possibleMoves = new ArrayList<>();
+    //    int row = from.getRow(), column = from.getColumn();
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 1).get(column)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 1).get(column));
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 2).get(column)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 2).get(column));
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 1).get(column + 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 1).get(column + 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row + 1).get(column - 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row + 1).get(column - 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 1).get(column)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 1).get(column));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 2).get(column)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 2).get(column));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 1).get(column + 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 1).get(column + 1));
+//
+    //    if(checkStep(cellList, from, cellList.get(row - 1).get(column - 1)) == StepType.STEP)
+    //        possibleMoves.add(cellList.get(row - 1).get(column - 1));
+//
+    //    return possibleMoves;
+    //}
 }

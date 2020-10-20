@@ -13,6 +13,7 @@ public class Cell {
     public Cell(Cell cell) {
         this.row = cell.row;
         this.column = cell.column;
+        this.chessPiece = cell.chessPiece;
     }
 
     public int getRow() {

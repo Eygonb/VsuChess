@@ -5,6 +5,7 @@ import model.ChessPiece;
 import model.Color;
 import model.StepType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop implements ChessPiece {
@@ -40,16 +41,39 @@ public class Bishop implements ChessPiece {
         int columnStep = to.getColumn() - from.getColumn();
 
         if (Math.abs(rowStep) == Math.abs(columnStep)) {
-            int directionRow = rowStep > 0 ? 1 : -1;
-            int directionColumn = columnStep > 0 ? 1 : -1;
-
-            for (int i = from.getRow() + directionRow; i != to.getRow(); i += directionRow) {
-                for (int j = from.getColumn() + directionColumn; j != to.getColumn(); j += directionColumn) {
-                    if (cellList.get(i).get(j).getChess() != null) return StepType.CANCEL;
-                }
-            }
-            return StepType.STEP;
+            if (checkForMissingDiagonalBlock(cellList, from, to)) return StepType.STEP;
+            else return StepType.CANCEL;
         }
         return StepType.CANCEL;
+    }
+
+    @Override
+    public List<Cell> getPossibleMoves(List<List<Cell>> cellList, Cell from) {
+        List<Cell> possibleMoves = new ArrayList<>();
+        for (int directionIterator = 0; directionIterator < 4; directionIterator++) {
+            int horizontalDirection = directionIterator % 2 == 0 ? 1 : -1;
+            int verticalDirection = directionIterator / 2 == 0 ? 1 : -1;
+
+            for (int i = from.getRow() + verticalDirection, j = from.getColumn() + horizontalDirection;
+                 i >= 0 && i < 8 && j >= 0 && j < 8;
+                 i += verticalDirection, j += horizontalDirection) {
+                Cell to = cellList.get(i).get(j);
+                if (from.getChess().checkStep(cellList, from, to) == StepType.STEP) possibleMoves.add(to);
+            }
+        }
+
+        return possibleMoves;
+    }
+
+    private boolean checkForMissingDiagonalBlock(List<List<Cell>> cellList, Cell from, Cell to) {
+        int directionRow = to.getRow() - from.getRow() > 0 ? 1 : -1;
+        int directionColumn = to.getColumn() - from.getColumn() > 0 ? 1 : -1;
+
+        for (int i = from.getRow() + directionRow, j = from.getColumn() + directionColumn;
+             i != to.getRow() && j != to.getColumn();
+             i += directionRow, j += directionColumn) {
+            if (cellList.get(i).get(j).getChess() != null) return false;
+        }
+        return true;
     }
 }
