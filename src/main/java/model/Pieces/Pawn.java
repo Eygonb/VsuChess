@@ -16,12 +16,19 @@ public class Pawn implements ChessPiece {
         wasMoving = false;
     }
 
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public boolean isWasMoving() {
         return wasMoving;
+    }
+
+    @Override
+    public void setWasMoving() {
+        this.wasMoving = true;
     }
 
     @Override
@@ -35,15 +42,12 @@ public class Pawn implements ChessPiece {
 
         if (!wasMoving && rowStep == colorMove * 2 && columnStep == 0) {
             if (cellList.get(from.getRow() + colorMove).get(from.getColumn()).getChess() == null && to.getChess() == null) {
-                wasMoving = true;
                 return StepType.STEP;
             }
         } else if (rowStep == colorMove) {
             if (columnStep == 0 && to.getChess() == null) {
-                wasMoving = true;
                 return StepType.STEP;
             } else if (to.getChess() != null && Math.abs(columnStep) == 1 && to.getChess().getColor() != color) {
-                wasMoving = true;
                 return StepType.STEP;
             }
         }

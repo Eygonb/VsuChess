@@ -16,12 +16,19 @@ public class King implements ChessPiece {
         wasMoving = false;
     }
 
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public boolean isWasMoving() {
         return wasMoving;
+    }
+
+    @Override
+    public void setWasMoving() {
+        this.wasMoving = true;
     }
 
     @Override
@@ -35,7 +42,6 @@ public class King implements ChessPiece {
 
         if (Math.abs(rowStep) <= 1 && Math.abs(columnStep) <= 1) {
             if (!isUnderAttack(cellList, to)) {
-                wasMoving = true;
                 return StepType.STEP;
             }
         } else if (!wasMoving && to.getRow() == from.getRow() && to.getColumn() == leftCastlingCell) { // to cell is left castling cell
@@ -43,7 +49,6 @@ public class King implements ChessPiece {
                 for (int i = 1; i < from.getColumn(); i++) {
                     if (cellList.get(from.getRow()).get(i).getChess() != null) return StepType.CANCEL; // if way from rook to king isn't empty
                 }
-                wasMoving = true;
                 return StepType.LEFT_CASTLING;
             }
         } else if (!wasMoving && to.getRow() == from.getRow() && to.getColumn() == rightCastlingCell) { // to cell is right castling cell
@@ -51,7 +56,6 @@ public class King implements ChessPiece {
                 for (int i = 7; i > from.getColumn(); i--) {
                     if (cellList.get(from.getRow()).get(i).getChess() != null) return StepType.CANCEL; // if way from rook to king isn't empty
                 }
-                wasMoving = true;
                 return StepType.RIGHT_CASTLING;
             }
         }

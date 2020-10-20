@@ -16,12 +16,19 @@ public class Knight implements ChessPiece {
         wasMoving = false;
     }
 
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public boolean isWasMoving() {
         return wasMoving;
+    }
+
+    @Override
+    public void setWasMoving() {
+        this.wasMoving = true;
     }
 
     @Override
@@ -33,7 +40,6 @@ public class Knight implements ChessPiece {
         int columnStep = to.getColumn() - from.getColumn();
 
         if (Math.abs(rowStep) == 2 && Math.abs(columnStep) == 1 || Math.abs(rowStep) == 1 && Math.abs(columnStep) == 2) {
-            wasMoving = true;
             return StepType.STEP;
         }
         return StepType.CANCEL;

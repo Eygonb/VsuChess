@@ -16,12 +16,19 @@ public class Rook implements ChessPiece {
         wasMoving = false;
     }
 
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public boolean isWasMoving() {
         return wasMoving;
+    }
+
+    @Override
+    public void setWasMoving() {
+        this.wasMoving = true;
     }
 
     @Override
@@ -38,14 +45,12 @@ public class Rook implements ChessPiece {
             for (int i = from.getColumn() + direction; i != to.getColumn(); i += direction) {
                 if (cellList.get(from.getRow()).get(i).getChess() != null) return StepType.CANCEL;
             }
-            wasMoving = true;
             return StepType.STEP;
         } else if (columnStep == 0 && rowStep != 0) {
             direction = rowStep > 0 ? 1 : -1;
             for (int i = from.getRow() + direction; i != to.getRow(); i += direction) {
                 if (cellList.get(i).get(from.getColumn()).getChess() != null) return StepType.CANCEL;
             }
-            wasMoving = true;
             return StepType.STEP;
         }
         return StepType.CANCEL;

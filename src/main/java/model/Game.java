@@ -15,8 +15,6 @@ public class Game {
     public Game() {
         chessBoard = new ChessBoard();
         currentPlayerColor = Color.WHITE;
-
-
     }
 
     public boolean move(int fromRow, int fromColumn, int toRow, int toColumn) {
@@ -29,11 +27,11 @@ public class Game {
         } else return false;
     }
 
+
+
     private Cell getCell(int row, int column) {
         return chessBoard.getCellList().get(row).get(column);
     }
-
-    //private boolean checkWins() {}
 
     private void changePlayer() {
         if(currentPlayerColor == Color.WHITE) currentPlayerColor = Color.BLACK;

@@ -16,12 +16,19 @@ public class Bishop implements ChessPiece {
         wasMoving = false;
     }
 
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public boolean isWasMoving() {
         return wasMoving;
+    }
+
+    @Override
+    public void setWasMoving() {
+        this.wasMoving = true;
     }
 
     @Override
@@ -41,7 +48,6 @@ public class Bishop implements ChessPiece {
                     if (cellList.get(i).get(j).getChess() != null) return StepType.CANCEL;
                 }
             }
-            wasMoving = true;
             return StepType.STEP;
         }
         return StepType.CANCEL;

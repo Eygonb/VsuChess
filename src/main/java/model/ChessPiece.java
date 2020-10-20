@@ -8,4 +8,6 @@ public interface ChessPiece {
     Color getColor();
 
     boolean isWasMoving();
+
+    void setWasMoving();
 }

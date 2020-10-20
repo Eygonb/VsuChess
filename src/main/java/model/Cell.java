@@ -10,6 +10,11 @@ public class Cell {
         this.column = column;
     }
 
+    public Cell(Cell cell) {
+        this.row = cell.row;
+        this.column = cell.column;
+    }
+
     public int getRow() {
         return row;
     }

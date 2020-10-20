@@ -69,6 +69,7 @@ public class ChessBoard {
     } //TODO превращение пешки
 
     private void step(Cell from, Cell to) {
+        from.getChess().setWasMoving();
         to.setChess(from.getChess());
         from.setChess(null); //TODO изменить wasMoving
     }
@@ -83,4 +84,24 @@ public class ChessBoard {
         cellList.get(row).get(3).setChess(new Queen(color));
         cellList.get(row).get(CHESS_BOARD_SIZE - 4).setChess(new King(color));
     }
+
+    private Cell getKing(Color color) {
+        for(List<Cell> row : cellList) {
+            for(Cell cell : row) {
+                if(cell.getChess() instanceof King && cell.getChess().getColor() == color) return cell;
+            }
+        }
+        return new Cell(0, 0);
+    }
+
+    public boolean checkmate(Color color) {
+        Cell kingCell = getKing(color);
+    }
+
+    public boolean checkWin(Color color) {
+        Cell kingCell = getKing(color);
+        ArrayList<Cell> cells = cellList.get(1).clone();
+    }
+
+    private List<List<Cell>>
 }
