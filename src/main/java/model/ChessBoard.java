@@ -94,14 +94,14 @@ public class ChessBoard {
         return new Cell(0, 0);
     }
 
-    public boolean checkmate(Color color) {
-        Cell kingCell = getKing(color);
-    }
-
-    public boolean checkWin(Color color) {
-        Cell kingCell = getKing(color);
-        ArrayList<Cell> cells = cellList.get(1).clone();
-    }
-
-    private List<List<Cell>>
+    //public boolean checkmate(Color color) {
+    //    Cell kingCell = getKing(color);
+    //}
+//
+    //public boolean checkWin(Color color) {
+    //    Cell kingCell = getKing(color);
+    //    ArrayList<Cell> cells = cellList.get(1).clone();
+    //}
+//
+    //private List<List<Cell>>
 }
