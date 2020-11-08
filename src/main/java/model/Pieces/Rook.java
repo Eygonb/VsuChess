@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Rook implements ChessPiece {
     private Color color;
-    private boolean wasMoving;
+    private boolean moved;
 
     public Rook(Color color) {
         this.color = color;
-        wasMoving = false;
+        moved = false;
     }
 
     @Override
@@ -23,13 +23,13 @@ public class Rook implements ChessPiece {
     }
 
     @Override
-    public boolean isWasMoving() {
-        return wasMoving;
+    public boolean isMoved() {
+        return moved;
     }
 
     @Override
-    public void setWasMoving() {
-        this.wasMoving = true;
+    public void setMoved() {
+        this.moved = true;
     }
 
     @Override

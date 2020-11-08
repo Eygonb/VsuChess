@@ -23,12 +23,12 @@ public class King implements ChessPiece {
     }
 
     @Override
-    public boolean isWasMoving() {
+    public boolean isMoved() {
         return wasMoving;
     }
 
     @Override
-    public void setWasMoving() {
+    public void setMoved() {
         this.wasMoving = true;
     }
 
@@ -56,14 +56,16 @@ public class King implements ChessPiece {
     @Override
     public List<Cell> getPossibleMoves(List<List<Cell>> cellList, Cell from) {
         List<Cell> possibleMoves = new ArrayList<>();
+        int size = cellList.size();
         int row = from.getRow(), column = from.getColumn();
-        for(int directionIterator = 0; directionIterator < 9; directionIterator++) {
+        for(int directionIterator = 0; directionIterator < size + 1; directionIterator++) {
             int directionRow = - 1 + directionIterator % 3;
             int directionColumn = -1 + directionIterator / 3;
             int rowIndex = row + directionRow;
             int columnIndex = column + directionColumn;
 
-            if(rowIndex >= 0 && rowIndex < 8 && columnIndex >= 0 && columnIndex < 8 &&
+
+            if(rowIndex >= 0 && rowIndex < size && columnIndex >= 0 && columnIndex < size &&
             checkStep(cellList, from, cellList.get(rowIndex).get(columnIndex)) == StepType.STEP)
                 possibleMoves.add(cellList.get(rowIndex).get(columnIndex));
         }
@@ -86,7 +88,7 @@ public class King implements ChessPiece {
         int leftCastlingCell = 2;
 
         if (!wasMoving && to.getRow() == from.getRow() && to.getColumn() == leftCastlingCell) { // to cell is left castling cell
-            if (!cellList.get(from.getRow()).get(0).getChess().isWasMoving()) { // if left rook wasn't move
+            if (!cellList.get(from.getRow()).get(0).getChess().isMoved()) { // if left rook wasn't move
                 for (int i = 1; i < from.getColumn(); i++) {
                     if (cellList.get(from.getRow()).get(i).getChess() != null)
                         return false; // if way from rook to king isn't empty
@@ -101,7 +103,7 @@ public class King implements ChessPiece {
         int rightCastlingCell = 6;
 
         if (!wasMoving && to.getRow() == from.getRow() && to.getColumn() == rightCastlingCell) { // to cell is right castling cell
-            if (!cellList.get(from.getRow()).get(7).getChess().isWasMoving()) { // if right rook wasn't move
+            if (!cellList.get(from.getRow()).get(7).getChess().isMoved()) { // if right rook wasn't move
                 for (int i = 7; i > from.getColumn(); i--) {
                     if (cellList.get(from.getRow()).get(i).getChess() != null)
                         return false; // if way from rook to king isn't empty

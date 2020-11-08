@@ -22,12 +22,12 @@ public class Pawn implements ChessPiece {
     }
 
     @Override
-    public boolean isWasMoving() {
+    public boolean isMoved() {
         return wasMoving;
     }
 
     @Override
-    public void setWasMoving() {
+    public void setMoved() {
         this.wasMoving = true;
     }
 

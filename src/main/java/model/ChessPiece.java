@@ -8,9 +8,9 @@ public interface ChessPiece {
 
     Color getColor();
 
-    boolean isWasMoving();
+    boolean isMoved();
 
-    void setWasMoving();
+    void setMoved();
 
     default List<Cell> getPossibleMoves(List<List<Cell>> cellList, Cell from) {
         List<Cell> possibleMoves = new ArrayList<>();
