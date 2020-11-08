@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoard {
-    private final static Integer CHESS_BOARD_SIZE = 8;
-    private List<List<Cell>> cellList;
+    private final Integer CHESS_BOARD_SIZE = 8;
+    private final List<List<Cell>> cellList;
 
     public ChessBoard(List<List<Cell>> cellList) {
+        if (cellList.size() != CHESS_BOARD_SIZE) throw new IllegalArgumentException();
+        for (int i = 0; i < CHESS_BOARD_SIZE; i++)
+            if (cellList.get(i).size() != CHESS_BOARD_SIZE) throw new IllegalArgumentException();
         this.cellList = cellList;
     }
 
@@ -37,6 +40,10 @@ public class ChessBoard {
         fillRow(CHESS_BOARD_SIZE - 1, Color.BLACK); // fill bottom row
     }
 
+    public Integer getChessBoardSize() {
+        return CHESS_BOARD_SIZE;
+    }
+
     public List<List<Cell>> getCellList() {
         return cellList;
     }
@@ -48,6 +55,11 @@ public class ChessBoard {
         StepType stepType = chessFrom.checkStep(cellList, from, to);
 
         if (stepType == StepType.STEP) {
+            if (chessFrom instanceof Pawn &&
+                    ((toRow == 0 && chessFrom.getColor() == Color.BLACK) ||
+                            (toRow == CHESS_BOARD_SIZE && chessFrom.getColor() == Color.WHITE))) {
+                from.setChess(new Queen(chessFrom.getColor()));
+            }
             step(from, to);
             return true;
         } else if (stepType == StepType.LEFT_CASTLING) {
@@ -66,10 +78,83 @@ public class ChessBoard {
             return true;
         } else if (stepType == StepType.CANCEL) return false;
         return false;
-    } //TODO превращение пешки
+    }
+
+    public boolean checkWin(Color color) {
+        Color enemyColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
+        if (!checkmate(enemyColor)) return false;
+
+        List<Cell> enemyChessPieces = new ArrayList<>();
+        for (List<Cell> row : cellList) {
+            for (Cell cell : row) {
+                if (cell.getChess() != null && cell.getChess().getColor() == enemyColor) enemyChessPieces.add(cell);
+            }
+        }
+
+        for (Cell enemyChessPieceCell : enemyChessPieces) {
+            List<Cell> possibleMoves = enemyChessPieceCell.getChess().getPossibleMoves(cellList, enemyChessPieceCell);
+
+            for (Cell possibleMovesCell : possibleMoves) {
+                Cell backupEnemyChessPieceCell = new Cell(enemyChessPieceCell);
+                Cell backupPossibleMovesCell = new Cell(possibleMovesCell);
+
+                possibleMovesCell.setChess(enemyChessPieceCell.getChess());
+                enemyChessPieceCell.setChess(null);
+
+                if (!checkmate(enemyColor)) return false;
+
+                possibleMovesCell.setChess(backupPossibleMovesCell.getChess());
+                enemyChessPieceCell.setChess(backupEnemyChessPieceCell.getChess());
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder boardString = new StringBuilder();
+
+        boardString.append("  ");
+        for (int i = 0; i < cellList.size(); i++) {
+            boardString.append("|").append((char) ('a' + i)).append(" ");
+            if (i == cellList.size() - 1) boardString.append('|');
+        }
+        boardString.append('\n');
+
+        for (int i = 0; i < cellList.size(); i++) {
+            StringBuilder chessPiecesString = new StringBuilder();
+            chessPiecesString.append(i + 1).append(" |");
+            for (int j = 0; j < cellList.get(i).size(); j++) {
+                ChessPiece chess = cellList.get(i).get(j).getChess();
+                if (chess instanceof Bishop) {
+                    chessPiecesString.append(chess.getColor() == Color.BLACK ? 'b' : 'w');
+                    chessPiecesString.append('B');
+                } else if (chess instanceof King) {
+                    chessPiecesString.append(chess.getColor() == Color.BLACK ? 'b' : 'w');
+                    chessPiecesString.append('K');
+                } else if (chess instanceof Knight) {
+                    chessPiecesString.append(chess.getColor() == Color.BLACK ? 'b' : 'w');
+                    chessPiecesString.append('N');
+                } else if (chess instanceof Pawn) {
+                    chessPiecesString.append(chess.getColor() == Color.BLACK ? 'b' : 'w');
+                    chessPiecesString.append('p');
+                } else if (chess instanceof Queen) {
+                    chessPiecesString.append(chess.getColor() == Color.BLACK ? 'b' : 'w');
+                    chessPiecesString.append('Q');
+                } else if (chess instanceof Rook) {
+                    chessPiecesString.append(chess.getColor() == Color.BLACK ? 'b' : 'w');
+                    chessPiecesString.append('R');
+                } else chessPiecesString.append("  ");
+                chessPiecesString.append('|');
+            }
+            boardString.append(chessPiecesString);
+            boardString.append('\n');
+        }
+        return boardString.toString();
+    }
 
     private void step(Cell from, Cell to) {
-        from.getChess().setWasMoving();
+        from.getChess().setMoved();
         to.setChess(from.getChess());
         from.setChess(null);
     }
@@ -91,12 +176,12 @@ public class ChessBoard {
                 if (cell.getChess() instanceof King && cell.getChess().getColor() == color) return cell;
             }
         }
-        return new Cell(0, 0);
+        return null;
     }
 
-    private boolean checkmate(Color color) {
+    private boolean checkmate(Color color) {  // return
         Cell kingCell = getKing(color);
-        if(kingCell.getChess() == null) return true; //TODO throws
+        if (kingCell == null) return true;
 
         for (int i = 0; i < cellList.size(); i++) {
             for (int j = 0; j < cellList.get(i).size(); j++) {
@@ -107,35 +192,5 @@ public class ChessBoard {
             }
         }
         return false;
-    }
-
-    public boolean checkWin(Color color) {
-        Color enemyColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
-        if(!checkmate(enemyColor)) return false;
-
-        List<Cell> enemyChessPieces = new ArrayList<>();
-        for(List<Cell> row : cellList) {
-            for(Cell cell : row) {
-                if(cell.getChess() != null && cell.getChess().getColor() == enemyColor) enemyChessPieces.add(cell);
-            }
-        }
-
-        for(Cell enemyChessPieceCell : enemyChessPieces) {
-            List<Cell> possibleMoves = enemyChessPieceCell.getChess().getPossibleMoves(cellList, enemyChessPieceCell);
-
-            for(Cell possibleMovesCell : possibleMoves) {
-                Cell backupEnemyChessPieceCell = new Cell(enemyChessPieceCell);
-                Cell backupPossibleMovesCell = new Cell(possibleMovesCell);
-
-                possibleMovesCell.setChess(enemyChessPieceCell.getChess());
-                enemyChessPieceCell.setChess(null);
-
-                if(!checkmate(enemyColor)) return false;
-
-                possibleMovesCell.setChess(backupPossibleMovesCell.getChess());
-                enemyChessPieceCell.setChess(backupEnemyChessPieceCell.getChess());
-            }
-        }
-        return true;
     }
 }

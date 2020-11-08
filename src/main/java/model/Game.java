@@ -1,7 +1,7 @@
 package model;
 
 public class Game {
-    private ChessBoard chessBoard;
+    private final ChessBoard chessBoard;
     private Color currentPlayerColor;
 
     public Game() {
