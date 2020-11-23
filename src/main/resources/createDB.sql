@@ -1,0 +1,2 @@
+create table player (id int auto_increment primary key, name varchar2(255), win_count int, defeat_count int);
+create table game (id int auto_increment primary key, count_step int, winner_id int, looser_id int, time_start timestamp, time_end timestamp)

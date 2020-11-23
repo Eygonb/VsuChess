@@ -1,12 +1,13 @@
 import model.Color;
 import model.Game;
+import model.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class GameTest {
     @Test
     public void TestKidWin() {
-        Game game = new Game();
+        Game game = new Game(new Player("John"), new Player("Dou"));
         Assert.assertTrue(game.move(4, 1, 4, 3));
         Assert.assertTrue(game.move(4, 6, 4, 4));
         Assert.assertTrue(game.move(5, 0, 2, 3));
