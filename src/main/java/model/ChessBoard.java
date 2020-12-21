@@ -1,6 +1,8 @@
 package model;
 
 import model.Pieces.*;
+import model.enums.Color;
+import model.enums.StepType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,10 +103,16 @@ public class ChessBoard {
                 possibleMovesCell.setChess(enemyChessPieceCell.getChess());
                 enemyChessPieceCell.setChess(null);
 
-                if (!checkmate(enemyColor)) return false;
+                boolean checkmate = checkmate(enemyColor);
 
                 possibleMovesCell.setChess(backupPossibleMovesCell.getChess());
                 enemyChessPieceCell.setChess(backupEnemyChessPieceCell.getChess());
+
+                if (!checkmate) {
+                    return false;
+                }
+
+
             }
         }
         return true;
