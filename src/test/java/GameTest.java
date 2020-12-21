@@ -1,4 +1,4 @@
-import model.Color;
+import model.enums.Color;
 import model.Game;
 import model.Player;
 import org.junit.Assert;

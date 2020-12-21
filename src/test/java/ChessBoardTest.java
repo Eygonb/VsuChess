@@ -1,6 +1,6 @@
 import model.Cell;
 import model.ChessBoard;
-import model.Color;
+import model.enums.Color;
 import model.Pieces.King;
 import model.Pieces.Knight;
 import model.Pieces.Pawn;

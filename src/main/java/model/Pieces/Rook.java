@@ -1,11 +1,9 @@
 package model.Pieces;
 
 import model.Cell;
-import model.ChessPiece;
-import model.Color;
-import model.StepType;
+import model.enums.Color;
+import model.enums.StepType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook implements ChessPiece {

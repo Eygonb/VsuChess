@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.Color;
+
 import java.util.Date;
 
 public class Game {
@@ -67,7 +69,7 @@ public class Game {
 
     public boolean isEnded() {
         Color prevPlayerColor = currentPlayerColor == Color.BLACK ? Color.WHITE : Color.BLACK;
-        boolean isFinished = chessBoard.checkWin(prevPlayerColor);
+        isFinished = chessBoard.checkWin(prevPlayerColor);
         if(isFinished) {
             timeEnd = new Date().getTime();
             this.isFinished = true;
@@ -87,6 +89,10 @@ public class Game {
             }
         }
         return isFinished;
+    }
+
+    public void surrenderCurrentPlayer() {
+
     }
 
     private Cell getCell(int row, int column) {

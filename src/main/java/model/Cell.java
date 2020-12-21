@@ -1,5 +1,7 @@
 package model;
 
+import model.Pieces.ChessPiece;
+
 public class Cell {
     private final Integer row;
     private final Integer column;

@@ -1,8 +1,8 @@
 import model.Cell;
-import model.ChessPiece;
-import model.Color;
+import model.Pieces.ChessPiece;
+import model.enums.Color;
 import model.Pieces.Queen;
-import model.StepType;
+import model.enums.StepType;
 import org.junit.Assert;
 import org.junit.Test;
 

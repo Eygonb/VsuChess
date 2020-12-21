@@ -1,4 +1,8 @@
-package model;
+package model.Pieces;
+
+import model.Cell;
+import model.enums.Color;
+import model.enums.StepType;
 
 import java.util.ArrayList;
 import java.util.List;
